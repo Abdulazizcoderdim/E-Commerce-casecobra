@@ -1,5 +1,7 @@
+import { Icons } from '@/components/Icons'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import Phone from '@/components/Phone'
+import { Reviews } from '@/components/Reviews'
 import { AnimatedTooltip } from '@/components/ui/animated-tooltip'
 // import Phone from '@/components/Phone.1'
 import { ArrowRight, Check, Star } from 'lucide-react'
@@ -30,7 +32,7 @@ const items = [
     id: 5,
     name: 'Robert Johnson',
     image: '/users/user-5.jpg',
-  }
+  },
 ]
 
 export default function Home() {
@@ -76,7 +78,7 @@ export default function Home() {
 
               <div className="mt-12 flex flex-col sm:flex-row items-center sm:items-start gap-5">
                 <div className="flex">
-                  <AnimatedTooltip items={items}/>
+                  <AnimatedTooltip items={items} />
                   {/* <img
                     className="inline-block h-10 w-10 rounded-full ring-2 ring-slate-100"
                     src="/users/user-1.png"
@@ -148,7 +150,7 @@ export default function Home() {
               What our{' '}
               <span className="relative px-2">
                 customers{' '}
-                {/* <Icons.underline className='hidden sm:block pointer-events-none absolute inset-x-0 -bottom-6 text-green-500' /> */}
+                <Icons.underline className="hidden sm:block pointer-events-none absolute inset-x-0 -bottom-6 text-green-500" />
               </span>{' '}
               say
             </h2>
@@ -162,11 +164,12 @@ export default function Home() {
           <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2 gap-y-16">
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="flex gap-0.5 mb-2">
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-5 w-5 text-green-600 fill-green-600"
+                  />
+                ))}
               </div>
               <div className="text-lg leading-8">
                 <p>
@@ -198,11 +201,12 @@ export default function Home() {
             {/* second user review */}
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="flex gap-0.5 mb-2">
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
-                <Star className="h-5 w-5 text-green-600 fill-green-600" />
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-5 w-5 text-green-600 fill-green-600"
+                  />
+                ))}
               </div>
               <div className="text-lg leading-8">
                 <p>
@@ -234,7 +238,9 @@ export default function Home() {
           </div>
         </MaxWidthWrapper>
 
-        <div className="pt-16">{/* <Reviews /> */}</div>
+        <div className="pt-16">
+          <Reviews />
+        </div>
       </section>
 
       <section>
@@ -305,4 +311,3 @@ export default function Home() {
     </div>
   )
 }
-
