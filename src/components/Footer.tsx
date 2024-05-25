@@ -34,4 +34,3 @@ const Footer = () => {
 }
 
 export default Footer
-//2:19:00
