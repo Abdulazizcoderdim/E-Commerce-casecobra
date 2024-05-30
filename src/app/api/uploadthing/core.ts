@@ -1,6 +1,7 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next'
-import { UploadThingError } from 'uploadthing/server'
 import { z } from 'zod'
+import sharp from "sharp"
+import { db } from '@/db'
 
 const f = createUploadthing()
 
@@ -12,6 +13,21 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       const { configId } = metadata.input
+
+      const res = await fetch(file.url)
+      const buffer = await res.arrayBuffer()
+
+      const imgMetadata = await sharp(buffer).metadata()
+      const {width, height} = imgMetadata
+ 
+      if(!configId){
+          const configuration = await db.configuration.create({
+            data: {
+              
+            }
+          })
+      }
+
       return { configId }
     }),
 } satisfies FileRouter
