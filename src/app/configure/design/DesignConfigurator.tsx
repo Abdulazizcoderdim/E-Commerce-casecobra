@@ -1,9 +1,13 @@
 'use client'
 
+import HandleComponent from '@/components/HandleComponent'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import NextImage from 'next/image'
 import { Rnd } from 'react-rnd'
+import { RadioGroup } from '@headlessui/react'
+import { useState } from 'react'
 
 interface DesignConfiguratorProps {
   imageUrl: string
@@ -16,6 +20,11 @@ const DesignConfigurator = ({
   configId,
   imageDimensions,
 }: DesignConfiguratorProps) => {
+
+  const [options, setOptions] = useState({
+    color: "black"
+  })
+
   return (
     <div className="relative mt-20 grid grid-cols-3 mb-20 pb-20">
       <div className="relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
@@ -47,9 +56,13 @@ const DesignConfigurator = ({
             height: imageDimensions.height / 4,
             width: imageDimensions.width / 4,
           }}
+          className="absolute z-20 border-[3px] border-primary"
           lockAspectRatio
           resizeHandleComponent={{
-            
+            bottomRight: <HandleComponent />,
+            bottomLeft: <HandleComponent />,
+            topLeft: <HandleComponent />,
+            topRight: <HandleComponent />,
           }}
         >
           <div className="relative w-full h-full">
@@ -62,8 +75,30 @@ const DesignConfigurator = ({
           </div>
         </Rnd>
       </div>
+
+      <div className="h-[37.5rem] flex flex-col bg-white">
+        <ScrollArea className="relative flex-1 overflow-auto">
+          <div
+            aria-hidden="true"
+            className="absolute z-10 inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white pointer-events-none"
+          />
+
+          <div className="px-8 pb-12 pt-8">
+            <h2 className="tracking-tight font-bold text-3xl">
+              Cusmotmize your case
+            </h2>
+
+            <div className="w-full h-px bg-zinc-200 my-6" />
+
+            <div className="relative mt-4 h-full flex flex-col justify-between">
+              <RadioGroup value></RadioGroup>
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   )
 }
 
 export default DesignConfigurator
+//4:25:00
