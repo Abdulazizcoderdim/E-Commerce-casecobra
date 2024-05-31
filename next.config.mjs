@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ['utfs.io'],
+  },
+}
 
-export default nextConfig;
+export default nextConfig
+//4:09:00
