@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { ChevronsDown } from 'lucide-react'
+import { Check, ChevronsDown } from 'lucide-react'
 
 interface DesignConfiguratorProps {
   imageUrl: string
@@ -165,7 +165,16 @@ const DesignConfigurator = ({
                                 model.label === options.model.label,
                             }
                           )}
-                        ></DropdownMenuItem>
+                          onClick={() =>
+                            setOptions((prev) => ({
+                              ...prev,
+                              model,
+                            }))
+                          }
+                        >
+                          <Check className={cn('mr-2 h-4 w-4', model.label === options.model.label ? 'opacity-100' : 'opacity-0')}/>
+                          {model.label}
+                        </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>

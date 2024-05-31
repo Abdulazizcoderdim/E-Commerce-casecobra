@@ -44,4 +44,17 @@ export const MODELS = {
       value: 'iphone15',
     },
   ],
+} as const
+
+
+export const MATERIALS = {
+    name: 'materials',
+    options: [
+        {
+            label: 'Silicone',
+            value: 'silicone',
+            description: undefined,
+            price: 0
+        }
+    ]
 }
