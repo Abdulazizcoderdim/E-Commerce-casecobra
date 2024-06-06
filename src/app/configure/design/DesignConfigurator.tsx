@@ -26,8 +26,8 @@ import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react'
 import { BASE_PRICE } from '@/config/products'
 import { useUploadThing } from '@/lib/uploadthing'
 import { useToast } from '@/components/ui/use-toast'
-// import { useMutation } from '@tanstack/react-query'
-// import { saveConfig as _saveConfig, SaveConfigArgs } from './actions'
+import { useMutation } from '@tanstack/react-query'
+import { saveConfig as _saveConfig, SaveConfigArgs } from './actions'
 import { useRouter } from 'next/navigation'
 
 interface DesignConfiguratorProps {
@@ -44,22 +44,22 @@ const DesignConfigurator = ({
   const { toast } = useToast()
   const router = useRouter()
 
-  // const { mutate: saveConfig, isPending } = useMutation({
-  //   mutationKey: ['save-config'],
-  //   mutationFn: async (args: SaveConfigArgs) => {
-  //     await Promise.all([saveConfiguration(), _saveConfig(args)])
-  //   },
-  //   onError: () => {
-  //     toast({
-  //       title: 'Something went wrong',
-  //       description: 'There was an error on our end. Please try again.',
-  //       variant: 'destructive',
-  //     })
-  //   },
-  //   onSuccess: () => {
-  //     router.push(`/configure/preview?id=${configId}`)
-  //   },
-  // })
+  const { mutate: saveConfig, isPending } = useMutation({
+    mutationKey: ['save-config'],
+    mutationFn: async (args: SaveConfigArgs) => {
+      await Promise.all([saveConfiguration(), _saveConfig(args)])
+    },
+    onError: () => {
+      toast({
+        title: 'Something went wrong',
+        description: 'There was an error on our end. Please try again.',
+        variant: 'destructive',
+      })
+    },
+    onSuccess: () => {
+      router.push(`/configure/preview?id=${configId}`)
+    },
+  })
 
   const [options, setOptions] = useState<{
     color: (typeof COLORS)[number]
@@ -393,9 +393,9 @@ const DesignConfigurator = ({
                 )}
               </p>
               <Button
-                isLoading={isPending}
+                // isLoading={isPending}
                 disabled={isPending}
-                loadingText="Saving"
+                // loadingText="Saving"
                 onClick={() =>
                   saveConfig({
                     configId,
