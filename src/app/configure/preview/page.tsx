@@ -27,3 +27,4 @@ const Page = async ({ searchParams }: PageProps) => {
 }
 
 export default Page
+//6:47:)0
