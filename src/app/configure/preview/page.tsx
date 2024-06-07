@@ -23,8 +23,7 @@ const Page = async ({ searchParams }: PageProps) => {
     return notFound()
   }
 
-  return <DesignPreview/>
+  return <DesignPreview configuration={configuration} />
 }
 
 export default Page
-//6:47:)0

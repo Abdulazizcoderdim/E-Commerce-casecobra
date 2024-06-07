@@ -49,3 +49,4 @@ model Configuration {
   finish CaseFinish?
   croppedImageUrl String?
 }
+
