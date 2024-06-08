@@ -6,6 +6,7 @@ import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
 import { cn, formatPrice } from '@/lib/utils'
 import { COLORS, MODELS } from '@/validators/option-validator'
 import { Configuration } from '@prisma/client'
+import { useMutation } from '@tanstack/react-query'
 import { ArrowRight, Check } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
@@ -28,6 +29,12 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   if (material === 'polycarbonate')
     totalPrice += PRODUCT_PRICES.material.polycarbonate
   if (finish === 'textured') totalPrice += PRODUCT_PRICES.finish.textured
+
+
+  const {} = useMutation({
+    mutationKey: ['get-checkout-session'],
+    mutationFn:
+  })
 
   return (
     <>
@@ -114,20 +121,19 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
 
                 <div className="flex items-center justify-between py-2">
                   <p className="text-gray-900 font-semibold">Order total</p>
-                  <p className='font-semibold text-gray-900'>
+                  <p className="font-semibold text-gray-900">
                     {formatPrice(totalPrice / 100)}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className='mt-8 flex justify-end pb-12'>
-              <Button className='px-4 sm:px-6 lg:px-8'>
-                Check out <ArrowRight className='ml-1.5 inline h-4 w-4'/>
+            <div className="mt-8 flex justify-end pb-12">
+              <Button className="px-4 sm:px-6 lg:px-8">
+                Check out <ArrowRight className="ml-1.5 inline h-4 w-4" />
               </Button>
             </div>
           </div>
-
         </div>
       </div>
     </>
