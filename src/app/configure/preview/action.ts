@@ -15,36 +15,45 @@ export const createCheckoutSession = async ({
   })
 
   if (!configuration) {
-    throw new Error("No such configuration found")
+    throw new Error('No such configuration found')
   }
 
-  const {getUser} = getKindeServerSession()
+  const { getUser } = getKindeServerSession()
   const user = await getUser()
 
- const {finish, material} = configuration
- 
- let price = BASE_PRICE
- if(finish === "textured") price += PRODUCT_PRICES.finish.textured
- if(material === "polycarbonate") price += PRODUCT_PRICES.material.polycarbonate
- 
- let order: Order | undefined = undefined
+  if (!user) {
+    throw new Error('You need to be logged in')
+  }
 
- const existingOrder = await db.order.findFirst({
-   where: {
-     userId: user?.id,
-     configurationId: configuration.id,
-   }
- })
+  const { finish, material } = configuration
 
- if(existingOrder) {
-  order = existingOrder
- }else{
-  order = await db.order.create({
-    data: {
-      amount: price / 100,
-      userId: user?.id,
+  let price = BASE_PRICE
+  if (finish === 'textured') price += PRODUCT_PRICES.finish.textured
+  if (material === 'polycarbonate')
+    price += PRODUCT_PRICES.material.polycarbonate
+
+  let order: Order | undefined = undefined
+
+  const existingOrder = await db.order.findFirst({
+    where: {
+      userId: user.id,
       configurationId: configuration.id,
-    }
+    },
   })
- }
+
+  console.log(user.id, configuration.id)
+
+  if (existingOrder) {
+    order = existingOrder
+  } else {
+    order = await db.order.create({
+      data: {
+        amount: price / 100,
+        userId: user.id,
+        configurationId: configuration.id,
+      },
+    })
+  }
+  
 }
+//7:44:00
