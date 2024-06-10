@@ -2,6 +2,7 @@
 
 import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
 import { db } from '@/db'
+import { stripe } from '@/lib/stripe'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { Order } from '@prisma/client'
 
@@ -55,5 +56,29 @@ export const createCheckoutSession = async ({
     })
   }
   
+  const product = await stripe.products.create({
+    name: "Custom iPhone Case",
+    images: [configuration.imageUrl],
+    default_price_data: {
+      currency: "USD",
+      unit_amount: price,
+    }
+  })
+
+  const stripeSession = await stripe.checkout.sessions.create({
+    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?=id=${configuration.id}`,
+    payment_method_types: ["card", "paypal"],
+    mode: "payment",
+    shipping_address_collection: {allowed_countries: ["DE", "US"]},
+    metadata: {
+      userId: user.id,
+      configId: order.id,
+    },
+    line_items: [{price: product.default_price as string, quantity: 1}],
+  })
+
+  return {url: stripeSession.url}
 }
-//7:44:00
+
+//8:02:00
